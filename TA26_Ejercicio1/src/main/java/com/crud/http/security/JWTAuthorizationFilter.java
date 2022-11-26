@@ -1,7 +1,7 @@
 package com.crud.http.security;
 
 import static com.crud.http.security.Constants.HEADER_AUTHORIZACION_KEY;
-import static com.crud.http.security.Constants.SUPER_SECRET_KEY;
+import static com.crud.http.security.Constants.PRIVATE_KEY;
 import static com.crud.http.security.Constants.TOKEN_BEARER_PREFIX;
 
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		if (token != null) {
 			// Se procesa el token y se recupera el usuario.
 			String user = Jwts.parser()
-						.setSigningKey(SUPER_SECRET_KEY)
+						.setSigningKey(PRIVATE_KEY)
 						.parseClaimsJws(token.replace(TOKEN_BEARER_PREFIX, ""))
 						.getBody()
 						.getSubject();

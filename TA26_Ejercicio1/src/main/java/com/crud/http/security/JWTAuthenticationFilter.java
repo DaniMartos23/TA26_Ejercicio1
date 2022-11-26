@@ -3,7 +3,7 @@ package com.crud.http.security;
 
 import static com.crud.http.security.Constants.HEADER_AUTHORIZACION_KEY;
 import static com.crud.http.security.Constants.ISSUER_INFO;
-import static com.crud.http.security.Constants.SUPER_SECRET_KEY;
+import static com.crud.http.security.Constants.PRIVATE_KEY;
 import static com.crud.http.security.Constants.TOKEN_BEARER_PREFIX;
 import static com.crud.http.security.Constants.TOKEN_EXPIRATION_TIME;
 import java.io.IOException;
@@ -56,10 +56,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String token = Jwts.builder().setIssuedAt(new Date()).setIssuer(ISSUER_INFO)
 				.setSubject(((User)auth.getPrincipal()).getUsername())
 				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
-				.signWith(SignatureAlgorithm.HS512, SUPER_SECRET_KEY).compact();
+				.signWith(SignatureAlgorithm.HS512, PRIVATE_KEY).compact();
 		response.addHeader(HEADER_AUTHORIZACION_KEY, TOKEN_BEARER_PREFIX + " " + token);//devuelve token por cabecera
 		response.getWriter().write("{\"token\": \"" + token + "\"}");//devuelve token por body
-		System.out.println(response.getHeader(HEADER_AUTHORIZACION_KEY));
+		
 	
 	}
 	
